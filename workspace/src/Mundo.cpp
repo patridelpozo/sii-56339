@@ -33,7 +33,7 @@ void CMundo::InitGL()
 	glEnable(GL_COLOR_MATERIAL);
 	
 	glMatrixMode(GL_PROJECTION);
-	gluPerspective( 40.0, 800/600.0f, 0.1, 150);
+	gluPerspective( 40.0, 800/600.0f, 0.1, 150); //ghah
 }
 
 void print(char *mensaje, int x, int y, float r, float g, float b)
