@@ -16,7 +16,7 @@ Movimiento de las raquetas con las teclas O-L (raqueta derecha, jugador 2) y W-S
 
  
 # Práctica 2
- # Fecha 02/10/2026
+# Fecha 02/10/2026
 
 # Descripción
 Modificación del código para añadir un fifo que conecte logger con tenis. Además, se añade la condición de que, cuando un jugador llegue a 3 puntos, se acabe la partida.
@@ -26,6 +26,15 @@ Se añade en la carpeta src logger.cpp con su respectivo código.
 Cambios en Mundo.cpp.
 
 
-
- 
 # Práctica 3
+# Fecha 30/10/2026
+
+# Descripción
+Modificación del código para añadir bot que juege al juego del tenis. De esta forma el jugador 1 (izquierda) es la máquina y el jugador 2 (derecha) es el usuario.
+
+# Código modificado
+Se añade en la carpeta src bot.cpp con su respectivo código.
+Cambios en Mundo.cpp. 
+Para ejecutarlo se abren dos terminales: primero en una de ellas se ejecuta ./tenis, después en la otra se ejecuta ./bot datos_tenis.bin
+
+
