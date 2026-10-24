@@ -14,13 +14,15 @@
 
 #include "Esfera.h"
 #include "Raqueta.h"
+#include "DatosMemCompartida.h"
 
 class CMundo  
 {
 public:
 	void Init();
 	CMundo();
-	virtual ~CMundo();	
+	virtual ~CMundo();
+	DatosMemCompartida *datosMemCompartida;	
 	
 	void InitGL();	
 	void OnKeyboardDown(unsigned char key, int x, int y);

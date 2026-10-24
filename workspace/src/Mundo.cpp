@@ -12,6 +12,11 @@
 #include <string.h>
 #include <math.h>
 
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -164,6 +169,33 @@ void CMundo::OnTimer(int value)
 	{
 	exit(0); //Se cierra logger y tenis
 	}
+	
+	//Actualizamos la información de la memoria compartida para que el bot la pueda leer
+	datosMemCompartida->esfera=esfera;
+	datosMemCompartida->jugador1=jugador1;
+	
+	//Después de la lectura del bot, invocamos la acción
+	if(datosMemCompartida->accion==1){
+		OnKeyboardDown('w', 0, 0); //Mover la raqueta hacia arriba
+	}
+	else if(datosMemCompartida->accion==-1){
+		OnKeyboardDown('s', 0, 0); //Mover la raqueta hacia abajo
+	}
+	else{
+		jugador1.velocidad.y=0;
+	}
+	//PRUEBA: Dependiendo de lo que diga el bot en la memoria compartida, movemos la raqueta
+	/*if(datosMemCompartida->accion==1){
+		jugador1.velocidad.y=4.0f; //Mover la raqueta hacia arriba cte
+	}
+	else if(datosMemCompartida->accion==-1){
+		jugador1.velocidad.y=-4.0f; //Mover la raqueta hacia abajo cte
+	}
+	else{
+		jugador1.velocidad.y=0.0f;
+	}
+	jugador1.Mueve(t); //La raqueta cambiará a su nueva coordenada y*/
+	
 }
 
 void CMundo::OnKeyboardDown(unsigned char key, int x, int y)
@@ -216,6 +248,11 @@ void CMundo::Init()
 	if(fd_pipe<0){
 	perror("No se pudo abrir el FIFO");
 	}
-
+	
+	int fd=open("datos_tenis.bin", O_CREAT | O_RDWR, 0666);
+	ftruncate(fd, sizeof(DatosMemCompartida));
+	void *direccion_memoria=mmap(NULL, sizeof(DatosMemCompartida), PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+	close(fd);
+	datosMemCompartida=(DatosMemCompartida*)direccion_memoria;
 }
 

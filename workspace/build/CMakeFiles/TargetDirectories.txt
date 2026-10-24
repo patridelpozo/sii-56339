@@ -1,0 +1,5 @@
+/home/patridelpozo/sii-56339/workspace/build/CMakeFiles/tenis.dir
+/home/patridelpozo/sii-56339/workspace/build/CMakeFiles/logger.dir
+/home/patridelpozo/sii-56339/workspace/build/CMakeFiles/bot.dir
+/home/patridelpozo/sii-56339/workspace/build/CMakeFiles/edit_cache.dir
+/home/patridelpozo/sii-56339/workspace/build/CMakeFiles/rebuild_cache.dir
