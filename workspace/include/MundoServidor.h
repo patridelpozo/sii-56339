@@ -1,4 +1,4 @@
-// Mundo.h: interface for the CMundo class.
+// MundoServidor.h: interface for the CMundoServidor class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -14,21 +14,23 @@
 
 #include "Esfera.h"
 #include "Raqueta.h"
-#include "DatosMemCompartida.h"
+//#include "DatosMemCompartida.h"
 
-class CMundo  
+class CMundoServidor  
 {
 public:
 	void Init();
-	CMundo();
-	virtual ~CMundo();
-	DatosMemCompartida *datosMemCompartida;	
+	CMundoServidor();
+	virtual ~CMundoServidor();
+	//DatosMemCompartida *datosMemCompartida;	
 	
 	void InitGL();	
 	void OnKeyboardDown(unsigned char key, int x, int y);
 	void OnTimer(int value);
 	void OnDraw();	
 
+	void RecibeComandosJugador();
+	
 	Esfera esfera;
 	std::vector<Plano> paredes;
 	Plano fondo_izq;
@@ -39,6 +41,10 @@ public:
 	int puntos1;
 	int puntos2;
 	int fd_pipe;
+	int fd_pipe_in;
+	
+	pthread_t thid1;
+	
 };
 
-#endif // !defined(AFX_MUNDO_H__9510340A_3D75_485F_93DC_302A43B8039A__INCLUDED_)
+#endif // !defined(AFX_MUNDOSERVIDOR_H__INCLUDED_)
