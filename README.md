@@ -37,4 +37,10 @@ Se añade en la carpeta src bot.cpp con su respectivo código.
 Cambios en Mundo.cpp. 
 Para ejecutarlo se abren dos terminales: primero en una de ellas se ejecuta ./tenis, después en la otra se ejecuta ./bot datos_tenis.bin
 
+# Práctica 4
+# Fecha 27/11/2026
+
+# Descripción
+Modificación del código para transformar el juego en una arquitectura cliente-servidor mediante tuberías (FIFOs). Se comunican cuatro procesos independientes (Servidor, Cliente, Logger y Bot), pasando las coordenadas y los puntos a través de pipe_ coor, y recibiendo los comandos de las raquetas mediante pipe_teclas gracias a un hilo concurrente en el servidor.
+
 

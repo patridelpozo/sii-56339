@@ -12,7 +12,8 @@
 #include <string.h>
 #include <math.h>
 
-
+#include <sys/types.h>
+#include <sys/stat.h>
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -136,7 +137,10 @@ void CMundoCliente::OnTimer(int value)
 
 void CMundoCliente::OnKeyboardDown(unsigned char key, int x, int y)
 {
-
+	//Enviamos la tecla por la tubería pipe_teclas
+	char cad[100];
+    	sprintf(cad, "%c", key);
+    	write(fd_pipe_teclas, cad, strlen(cad) + 1);
 }
 
 void CMundoCliente::Init()
@@ -170,16 +174,19 @@ void CMundoCliente::Init()
 	jugador2.x1=6;jugador2.y1=-1;
 	jugador2.x2=6;jugador2.y2=1;
 
-	fd_pipe=open("fifo", O_WRONLY);
+	
 
-	if(fd_pipe<0){
-	perror("No se pudo abrir el FIFO");
-	}
 	
 	
 	fd_pipe = open("pipe_coor", O_RDONLY);
 	if(fd_pipe < 0) {
    		perror("Error al abrir la tuberia de coordenadas en el cliente");
+	}
+	
+	mkfifo("pipe_teclas", 0666);
+	fd_pipe_teclas = open("pipe_teclas", O_WRONLY);
+	if(fd_pipe_teclas < 0) {
+    		perror("No se pudo abrir la tuberia de teclas en el cliente");
 	}
 	
 }

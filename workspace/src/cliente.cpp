@@ -1,8 +1,8 @@
 #include "glut.h"
-#include "Mundo.h"
+#include "MundoCliente.h"
 
 //el unico objeto global
-CMundo mundo;
+CMundoCliente mundo;
 
 //los callback, funciones que seran llamadas automaticamente por la glut
 //cuando sucedan eventos
@@ -18,7 +18,7 @@ int main(int argc,char* argv[])
 	glutInit(&argc, argv);
 	glutInitWindowSize(800,600);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutCreateWindow("Mundo");
+	glutCreateWindow("Cliente - Juego");
 
 
 	//Registrar los callbacks

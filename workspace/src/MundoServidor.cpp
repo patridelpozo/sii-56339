@@ -12,6 +12,8 @@
 #include <string.h>
 #include <math.h>
 
+#include <sys/types.h>
+#include <sys/stat.h>
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -132,6 +134,7 @@ void CMundoServidor::OnTimer(int value)
 
 	jugador1.Rebota(esfera);
 	jugador2.Rebota(esfera);
+	
 	if(fondo_izq.Rebota(esfera))
 	{
 		esfera.centro.x=0;
@@ -195,10 +198,28 @@ void CMundoServidor::OnKeyboardDown(unsigned char key, int x, int y)
 	}
 }
 
+void* hilo_comandos(void* d)
+{
+      CMundoServidor* p = (CMundoServidor*) d;
+      p->RecibeComandosJugador();
+      return NULL;
+}
+
 void CMundoServidor::RecibeComandosJugador()
 {
-
+	while (1) {
+            usleep(10); // Pausa breve para no saturar la CPU
+            char cad[100];
+            read(fd_pipe_in, cad, sizeof(cad));
+            unsigned char key;
+            sscanf(cad, "%c", &key);
+            if(key == 's') jugador1.velocidad.y = -4;
+            if(key == 'w') jugador1.velocidad.y = 4;
+            if(key == 'l') jugador2.velocidad.y = -4;
+            if(key == 'o') jugador2.velocidad.y = 4;
+      }
 }
+
 
 void CMundoServidor::Init()
 {
@@ -234,9 +255,18 @@ void CMundoServidor::Init()
 	
 	
 	mkfifo("pipe_coor", 0666);
-	fd_pipe = open ("pipe_coor", O_WRONLY);
+	fd_pipe = open ("pipe_coor", O_RDWR);
 	if(fd_pipe<0){
 	perror("Error al abrir la tuberia de coordenadas en el servidor");
 	}
+	
+	mkfifo("pipe_teclas", 0666);
+	fd_pipe_in = open("pipe_teclas", O_RDWR); 
+	if(fd_pipe_in < 0) {
+    		perror("No se pudo abrir la tuberia de teclas en el servidor");
+	}
+
+	// Crear el hilo concurrente que procesará los comandos
+	pthread_create(&thid1, NULL, hilo_comandos, this);
 }
 
